@@ -12,6 +12,8 @@ die(){
 
 SYNTHEA=synthea/src
 SYNTHEA_INTL=synthea-international/ca/src
+
+# --update might be an idea to stop overwriting files that were edited in the synthea tree
 RSYNC="rsync -v -a $SYNTHEA_INTL/ $SYNTHEA"  #watch the  darn  trailing / on source.
 
 test -d $SYNTHEA || die "no local clone of $SYNTHEA in current working directory. Are you in the parent dir of both $SYNTHEA and $SYNTHEA_INTL ?"
