@@ -38,8 +38,50 @@ public class MatzTest {
     Generator.DEFAULT_STATE = testStateDefault;
   }
   
+/**
+Population: 1
+Seed: 0
+Provider Seed:1613091331776
+Reference Time: 1613091331776
+Location: Toronto, Ontario
+Min Age: 0
+Max Age: 140
+1 -- Dessie725 Goyette777 (57 y/o F) Toronto, Ontario 
+Records: total=1, alive=1, dead=0
+*/
+  @Test
+  public void matzTestSeed0Pop1() throws Exception {
+	System.out.println("hello from MatzTestSeedPop100");
+    TestHelper.exportOff();
+    String[] args = {"-s", "0", "-p", "1", "Ontario", "Toronto"};
+    for (String s: args) {
+        System.out.println(s);
+    }
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.out.println("about to call App.main"); //stdout
+    System.setOut(print);
+    System.out.println("about to call App.main"); //out??
+    out.flush();
+    App.main(args);
+    System.out.println("returned from App.main..");
+    out.flush();
+    String output = out.toString();
+    System.out.println(output);
+    Assert.assertTrue(output.contains("Running with options:"));
+    Assert.assertTrue(output.contains("Population: 1"));
+    Assert.assertTrue(output.contains("Seed: 0"));
+    Assert.assertTrue(output.contains("Location: Toronto, Ontario"));
+    Assert.assertTrue(output.contains("alive=1"));
+    Assert.assertTrue(output.contains("dead=0"));
+    Assert.assertTrue(output.contains("1 -- Dessie725 Goyette777 (57 y/o F) Toronto, Ontario ")); 
+    System.setOut(original);
+    System.out.println(output);
+  }  
+  
   /*
-   * this is what my run printed on console. it took about 10sec on i6 mac pro
+   * this is what run_synthea printed on console. it took about 10sec on i6 mac pro
    * 
 Running with options:
 Population: 10
@@ -63,16 +105,14 @@ Records: total=10, alive=10, dead=0
 returned from App.main..
    */
 
-  //@Test
+  @Test
   public void matzTestSeed0Pop10() throws Exception {
 	System.out.println("hello from MatzTestSeedPop100");
     TestHelper.exportOff();
     String[] args = {"-s", "0", "-p", "10", "Ontario", "Toronto"};
-
-    for (String s: args) {           
-        System.out.println(s); 
+    for (String s: args) {
+        System.out.println(s);
     }
-    
     final PrintStream original = System.out;
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final PrintStream print = new PrintStream(out, true);
@@ -222,11 +262,9 @@ returned from App.main..
 	  System.out.println("hello from MatzTestSeedPop100");
     TestHelper.exportOff();
     String[] args = {"-s", "0", "-p", "100", "Ontario", "Toronto"};
-
-    for (String s: args) {           
-        System.out.println(s); 
+    for (String s: args) {
+        System.out.println(s);
     }
-    
     final PrintStream original = System.out;
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final PrintStream print = new PrintStream(out, true);
@@ -242,9 +280,10 @@ returned from App.main..
     Assert.assertTrue(output.contains("Population: 100"));
     Assert.assertTrue(output.contains("Seed: 0"));
     Assert.assertTrue(output.contains("Location: Toronto, Ontario"));
-    Assert.assertTrue(output.contains("alive=98"));
-    Assert.assertTrue(output.contains("dead=10"));
-    Assert.assertTrue(output.contains("80 -- Maribel82 Spinka232 (78 y/o F) Toronto, Ontario")); 
+    Assert.assertTrue(output.contains("alive=100"));
+    Assert.assertTrue(output.contains("dead=15"));
+	//last person printed by run_synthea -s 0 -p 100 Ontario Toronto
+    Assert.assertTrue(output.contains("61 -- Ezra452 Zboncak558 (96 y/o M) Toronto, Ontario")); 
     System.setOut(original);
     System.out.println(output);
   }
